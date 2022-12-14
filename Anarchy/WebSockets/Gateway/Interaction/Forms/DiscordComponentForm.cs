@@ -31,7 +31,7 @@ namespace Discord.Gateway
         {
             if (args.Interaction.Type == DiscordInteractionType.MessageComponent)
             {
-                string[] parts = args.Interaction.Data.ComponentId.Split('-');
+                var parts = args.Interaction.Data.ComponentId.Split('-');
 
                 if (parts[0] == Id)
                 {
@@ -57,11 +57,11 @@ namespace Discord.Gateway
 
         public static implicit operator List<MessageComponent>(DiscordComponentForm instance)
         {
-            List<MessageComponent> components = new List<MessageComponent>();
+            var components = new List<MessageComponent>();
 
             foreach (var row in instance.Rows)
             {
-                List<MessageInputComponent> inputs = new List<MessageInputComponent>();
+                var inputs = new List<MessageInputComponent>();
 
                 foreach (var input in row)
                 {

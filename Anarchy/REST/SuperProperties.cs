@@ -15,7 +15,7 @@ namespace Discord
             {
                 var client = new HttpClient();
 
-                string appPage = client.GetStringAsync("https://discord.com/app").Result;
+                var appPage = client.GetStringAsync("https://discord.com/app").Result;
                 const string findThis = "build_number:\"";
 
                 foreach (var asset in Regex.Matches(appPage, "/assets/.{20}.js"))
@@ -24,7 +24,7 @@ namespace Discord
 
                     if (content.Contains(findThis))
                     {
-                        string buildNumber = content.Substring(content.IndexOf(findThis) + findThis.Length).Split('"')[0];
+                        var buildNumber = content.Substring(content.IndexOf(findThis) + findThis.Length).Split('"')[0];
 
                         _versionCache = int.Parse(buildNumber);
                         break;

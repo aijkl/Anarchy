@@ -164,12 +164,12 @@ namespace Discord.Gateway
 
                 Reset();
 
-                bool lostConnection = args.Code == 1006 || args.Code == 1001;
+                var lostConnection = args.Code == 1006 || args.Code == 1001;
 
                 if (lostConnection)
                     Thread.Sleep(200);
 
-                GatewayCloseCode err = (GatewayCloseCode)args.Code;
+                var err = (GatewayCloseCode)args.Code;
 
                 if (LoggedIn && (lostConnection || err == GatewayCloseCode.RateLimited || err == GatewayCloseCode.SessionTimedOut || err == GatewayCloseCode.UnknownError))
                 {
@@ -291,7 +291,7 @@ namespace Discord.Gateway
                     switch (message.EventName)
                     {
                         case "READY":
-                            LoginEventArgs login = message.Data.ToObject<LoginEventArgs>().SetClient(this);
+                            var login = message.Data.ToObject<LoginEventArgs>().SetClient(this);
 
                             if (login.Application != null) _appId = login.Application.Value<ulong>("id");
 
@@ -336,7 +336,7 @@ namespace Discord.Gateway
                         case "USER_GUILD_SETTINGS_UPDATE":
                             if (Config.Cache)
                             {
-                                ClientGuildSettings settings = message.Data.ToObject<ClientGuildSettings>();
+                                var settings = message.Data.ToObject<ClientGuildSettings>();
 
                                 if (settings.GuildId.HasValue)
                                     GuildSettings[settings.Guild.Id] = settings;
@@ -345,7 +345,7 @@ namespace Discord.Gateway
                             }
                             break;
                         case "USER_UPDATE":
-                            DiscordUser user = message.Data.ToObject<DiscordUser>().SetClient(this);
+                            var user = message.Data.ToObject<DiscordUser>().SetClient(this);
 
                             if (user.Id == User.Id)
                                 User.Update(user);
@@ -392,7 +392,7 @@ namespace Discord.Gateway
                         case "GUILD_UPDATE":
                             if (Config.Cache || OnGuildUpdated != null)
                             {
-                                DiscordGuild guild = message.Data.ToObject<DiscordGuild>().SetClient(this);
+                                var guild = message.Data.ToObject<DiscordGuild>().SetClient(this);
 
                                 if (Config.Cache)
                                     GuildCache[guild.Id].Update(guild);
@@ -402,7 +402,7 @@ namespace Discord.Gateway
                             break;
                         case "GUILD_DELETE":
                             {
-                                UnavailableGuild guild = message.Data.ToObject<UnavailableGuild>();
+                                var guild = message.Data.ToObject<UnavailableGuild>();
 
                                 VoiceClients.Remove(guild.Id);
 
@@ -449,11 +449,11 @@ namespace Discord.Gateway
                         case "GUILD_MEMBER_UPDATE":
                             if (Config.Cache || OnGuildMemberUpdated != null)
                             {
-                                GuildMember member = message.Data.ToObject<GuildMember>().SetClient(this);
+                                var member = message.Data.ToObject<GuildMember>().SetClient(this);
 
                                 if (Config.Cache && member.User.Id == User.Id)
                                 {
-                                    SocketGuild guild = this.GetCachedGuild(member.GuildId);
+                                    var guild = this.GetCachedGuild(member.GuildId);
 
                                     // Discord doesn't send us the user's JoinedAt on updates
                                     member.JoinedAt = guild.ClientMember.JoinedAt;
@@ -489,7 +489,7 @@ namespace Discord.Gateway
 
                                 if (Config.Cache)
                                 {
-                                    if (Presences.TryGetValue(presence.UserId, out DiscordPresence existingPresence))
+                                    if (Presences.TryGetValue(presence.UserId, out var existingPresence))
                                     {
                                         existingPresence.Update(presence);
                                         presence = existingPresence;
@@ -505,7 +505,7 @@ namespace Discord.Gateway
                         case "VOICE_STATE_UPDATE":
                             try
                             {
-                                DiscordVoiceState newState = message.Data.ToObject<DiscordVoiceState>().SetClient(this);
+                                var newState = message.Data.ToObject<DiscordVoiceState>().SetClient(this);
 
                                 if (Config.Cache)
                                 {
@@ -523,7 +523,7 @@ namespace Discord.Gateway
                                                 guild._voiceStates.RemoveFirst(s => s.UserId == newState.UserId);
                                             else
                                             {
-                                                int i = guild._voiceStates.FindIndex(s => s.UserId == newState.UserId);
+                                                var i = guild._voiceStates.FindIndex(s => s.UserId == newState.UserId);
 
                                                 if (i > -1)
                                                     guild._voiceStates[i] = newState;
@@ -551,7 +551,7 @@ namespace Discord.Gateway
                         case "GUILD_ROLE_CREATE":
                             if (Config.Cache || OnRoleCreated != null)
                             {
-                                DiscordRole role = message.Data.ToObject<RoleUpdate>().Role.SetClient(this);
+                                var role = message.Data.ToObject<RoleUpdate>().Role.SetClient(this);
 
                                 if (Config.Cache)
                                     GuildCache[role.GuildId]._roles.Add(role);
@@ -563,7 +563,7 @@ namespace Discord.Gateway
                         case "GUILD_ROLE_UPDATE":
                             if (Config.Cache || OnRoleUpdated != null)
                             {
-                                DiscordRole role = message.Data.ToObject<RoleUpdate>().Role.SetClient(this);
+                                var role = message.Data.ToObject<RoleUpdate>().Role.SetClient(this);
 
                                 if (Config.Cache)
                                     GuildCache[role.GuildId]._roles.ReplaceFirst(r => r.Id == role.Id, role);
@@ -575,7 +575,7 @@ namespace Discord.Gateway
                         case "GUILD_ROLE_DELETE":
                             if (Config.Cache || OnRoleDeleted != null)
                             {
-                                DeletedRole role = message.Data.ToObject<DeletedRole>().SetClient(this);
+                                var role = message.Data.ToObject<DeletedRole>().SetClient(this);
 
                                 if (Config.Cache)
                                     GuildCache[role.Guild]._roles.RemoveFirst(r => r.Id == role.Id);
@@ -607,7 +607,7 @@ namespace Discord.Gateway
                                         PrivateChannels.Add((PrivateChannel)channel);
                                     else
                                     {
-                                        GuildChannel guildChannel = (GuildChannel)channel;
+                                        var guildChannel = (GuildChannel)channel;
 
                                         GuildCache[guildChannel.GuildId].ChannelsConcurrent.Add(guildChannel);
                                     }
@@ -628,7 +628,7 @@ namespace Discord.Gateway
                                         PrivateChannels.ReplaceFirst(c => c.Id == channel.Id, (PrivateChannel)channel);
                                     else
                                     {
-                                        GuildChannel guildChannel = (GuildChannel)channel;
+                                        var guildChannel = (GuildChannel)channel;
                                         GuildCache[guildChannel.GuildId].ChannelsConcurrent.ReplaceFirst(c => c.Id == guildChannel.Id, guildChannel);
                                     }
                                 }
@@ -769,7 +769,7 @@ namespace Discord.Gateway
                         case "CALL_DELETE":
                             if (Config.Cache || OnCallEnded != null)
                             {
-                                ulong channelId = message.Data.Value<ulong>("channel_id");
+                                var channelId = message.Data.Value<ulong>("channel_id");
 
                                 if (Config.Cache)
                                 {
@@ -866,7 +866,7 @@ namespace Discord.Gateway
                                 {
                                     var list = new List<DiscordThread>(GuildCache[thread.Guild.Id].Threads);
 
-                                    for (int i = 0; i < list.Count; i++)
+                                    for (var i = 0; i < list.Count; i++)
                                     {
                                         if (list[i].Id == thread.Id)
                                         {
@@ -947,7 +947,7 @@ namespace Discord.Gateway
 
                     Task.Run(() =>
                     {
-                        int interval = message.Data.ToObject<JObject>().GetValue("heartbeat_interval").ToObject<int>() - 1000;
+                        var interval = message.Data.ToObject<JObject>().GetValue("heartbeat_interval").ToObject<int>() - 1000;
 
                         try
                         {

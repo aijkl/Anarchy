@@ -21,9 +21,9 @@ namespace Discord
 
         public static T ParseDeterministic<T>(this JObject obj)
         {
-            if (TryFindTypes(typeof(T), out Dictionary<int, Type> types))
+            if (TryFindTypes(typeof(T), out var types))
             {
-                int type = obj.Value<int>("type");
+                var type = obj.Value<int>("type");
                 return (T)obj.ToObject(types.TryGetValue(type, out var t) ? t : typeof(T));
             }
             else
@@ -32,7 +32,7 @@ namespace Discord
 
         public static List<T> MultipleDeterministic<T>(this JArray arr)
         {
-            List<T> results = new List<T>();
+            var results = new List<T>();
 
             foreach (JObject child in arr)
                 results.Add(child.ParseDeterministic<T>());

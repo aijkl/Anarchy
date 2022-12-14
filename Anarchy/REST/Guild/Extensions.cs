@@ -78,7 +78,7 @@ namespace Discord
 
         public static async Task<IReadOnlyList<DiscordBan>> GetGuildBansAsync(this DiscordClient client, ulong guildId)
         {
-            IReadOnlyList<DiscordBan> bans = (await client.HttpClient.GetAsync($"/guilds/{guildId}/bans"))
+            var bans = (await client.HttpClient.GetAsync($"/guilds/{guildId}/bans"))
                                                     .Deserialize<IReadOnlyList<DiscordBan>>().SetClientsInList(client);
             foreach (var ban in bans)
                 ban.GuildId = guildId;
@@ -97,7 +97,7 @@ namespace Discord
 
         public static async Task<DiscordBan> GetGuildBanAsync(this DiscordClient client, ulong guildId, ulong userId)
         {
-            DiscordBan ban = (await client.HttpClient.GetAsync($"/guilds/{guildId}/bans/{userId}"))
+            var ban = (await client.HttpClient.GetAsync($"/guilds/{guildId}/bans/{userId}"))
                                    .Deserialize<DiscordBan>().SetClient(client);
             ban.GuildId = guildId;
             return ban;
@@ -145,7 +145,7 @@ namespace Discord
 
         public static async Task<IReadOnlyList<DiscordChannelSettings>> SetPrivateChannelSettingsAsync(this DiscordClient client, Dictionary<ulong, ChannelSettingsProperties> channels)
         {
-            JObject container = new JObject
+            var container = new JObject
             {
                 ["channel_overrides"] = JObject.FromObject(channels)
             };

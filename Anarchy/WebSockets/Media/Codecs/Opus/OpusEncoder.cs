@@ -56,7 +56,7 @@ namespace Discord.Media
 
         public unsafe int EncodeFrame(byte[] input, int inputOffset, byte[] output, int outputOffset)
         {
-            int result = 0;
+            var result = 0;
             fixed (byte* inPtr = input)
             fixed (byte* outPtr = output)
                 result = Encode(_ptr, inPtr + inputOffset, FrameSamplesPerChannel, outPtr + outputOffset, output.Length - outputOffset);

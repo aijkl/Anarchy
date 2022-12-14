@@ -20,7 +20,7 @@ namespace Discord.Commands
             Prefix = prefix;
             client.OnMessageReceived += Client_OnMessageReceived;
 
-            Assembly executable = Assembly.GetEntryAssembly();
+            var executable = Assembly.GetEntryAssembly();
 
             Commands = new Dictionary<string, DiscordCommand>();
             foreach (var type in executable.GetTypes())
@@ -35,16 +35,16 @@ namespace Discord.Commands
         {
             if (args.Message.Content.StartsWith(Prefix))
             {
-                List<string> parts = args.Message.Content.Split(' ').ToList();
+                var parts = args.Message.Content.Split(' ').ToList();
 
-                if (Commands.TryGetValue(parts[0].Substring(Prefix.Length), out DiscordCommand command))
+                if (Commands.TryGetValue(parts[0].Substring(Prefix.Length), out var command))
                 {
                     parts.RemoveAt(0);
 
-                    CommandBase inst = (CommandBase)Activator.CreateInstance(command.Type);
+                    var inst = (CommandBase)Activator.CreateInstance(command.Type);
                     inst.Prepare(_client, args.Message);
 
-                    for (int i = 0; i < command.Parameters.Count; i++)
+                    for (var i = 0; i < command.Parameters.Count; i++)
                     {
                         var param = command.Parameters[i];
 
@@ -91,20 +91,20 @@ namespace Discord.Commands
         // https://discord.com/developers/docs/reference#message-formatting
         private object ParseReference(Type expectedType, string reference)
         {
-            string value = reference.Substring(1, reference.Length - 2);
+            var value = reference.Substring(1, reference.Length - 2);
 
             // Get the object's ID (always last thing in the sequence)
 
-            MatchCollection matches = Regex.Matches(value, @"\d{18,}");
+            var matches = Regex.Matches(value, @"\d{18,}");
             if (matches.Count > 0) 
             {
-                Match match = matches[matches.Count - 1];
+                var match = matches[matches.Count - 1];
 
                 if (match.Index + match.Length == value.Length)
                 {
-                    ulong anyId = ulong.Parse(match.Value);
+                    var anyId = ulong.Parse(match.Value);
 
-                    string forSpecific = value.Substring(0, match.Index);
+                    var forSpecific = value.Substring(0, match.Index);
 
                     if (expectedType.IsAssignableFrom(typeof(MinimalChannel)))
                     {
@@ -139,10 +139,10 @@ namespace Discord.Commands
                     {
                         if (Regex.IsMatch(forSpecific, @"a?:\w+:"))
                         {
-                            string[] split = forSpecific.Split(':');
+                            var split = forSpecific.Split(':');
 
-                            bool animated = split[0] == "a";
-                            string name = split[1];
+                            var animated = split[0] == "a";
+                            var name = split[1];
 
                             if (expectedType == typeof(DiscordEmoji))
                             {

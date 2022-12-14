@@ -22,7 +22,7 @@ namespace Discord
 
         public static async Task<DiscordActiveSubscription> PurchaseSubscriptionAsync(this DiscordClient client, ulong paymentMethodId, ulong skuId, uint additionalBoosts = 0)
         {
-            List<AdditionalSubscriptionPlan> plans = new List<AdditionalSubscriptionPlan>();
+            var plans = new List<AdditionalSubscriptionPlan>();
 
             if (additionalBoosts > 0)
                 plans.Add(new AdditionalSubscriptionPlan() { Id = DiscordNitroSubTypes.GuildBoost.SubscriptionPlanId, Quantity = (int)additionalBoosts });

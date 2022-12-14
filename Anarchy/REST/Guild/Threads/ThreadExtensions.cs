@@ -9,7 +9,7 @@ namespace Discord
     {
         private static async Task<DiscordThread> createThreadAsync(this DiscordClient client, ulong channelId, string name, TimeSpan ttl, ulong? msgId)
         {
-            string msgStr = msgId.HasValue ? "/messages/" + msgId : "";
+            var msgStr = msgId.HasValue ? "/messages/" + msgId : "";
 
             return (await client.HttpClient.PostAsync($"/channels/{channelId}{msgStr}/threads", new ThreadCreationProperties()
             {

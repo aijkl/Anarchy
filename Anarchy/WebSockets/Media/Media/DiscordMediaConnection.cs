@@ -92,7 +92,7 @@ namespace Discord.Media
                 switch (message.Opcode)
                 {
                     case DiscordMediaOpcode.Ready:
-                        DiscordMediaReady ready = message.Data.ToObject<DiscordMediaReady>();
+                        var ready = message.Data.ToObject<DiscordMediaReady>();
 
                         SSRC = new DiscordSSRC() { Audio = ready.SSRC };
                         ServerEndpoint = new IPEndPoint(IPAddress.Parse(ready.IP), ready.Port);
@@ -164,7 +164,7 @@ namespace Discord.Media
 
         private void Holepunch()
         {
-            byte[] payload = new byte[74];
+            var payload = new byte[74];
             payload[0] = 1 >> 8;
             payload[1] = 1 >> 0;
             payload[2] = 0x46 >> 8;
@@ -201,12 +201,12 @@ namespace Discord.Media
             {
                 while (State > MediaConnectionState.NotConnected)
                 {
-                    byte[] received = UdpClient.Receive(ref _localEndpoint);
+                    var received = UdpClient.Receive(ref _localEndpoint);
 
                     if (BitConverter.ToInt16(new byte[] { received[1], received[0] }, 0) == 2)
                     {
-                        string ip = "";
-                        for (int i = 8; i < received.Length; i++)
+                        var ip = "";
+                        for (var i = 8; i < received.Length; i++)
                         {
                             if (received[i] == 0)
                                 break;
@@ -226,7 +226,7 @@ namespace Discord.Media
 
                         try
                         {
-                            var header = RTPPacketHeader.Read(SecretKey, received, out byte[] payload);
+                            var header = RTPPacketHeader.Read(SecretKey, received, out var payload);
 
                             OnUdpPacket?.Invoke(this, new MediaPacketEventArgs(header, payload));
                         }

@@ -9,7 +9,7 @@ namespace Discord
         public static async Task<DiscordDefaultWebhook> CreateWebhookAsync(this DiscordClient client, ulong channelId, DiscordWebhookProperties properties)
         {
             properties.ChannelId = channelId;
-            DiscordDefaultWebhook hook = (await client.HttpClient.PostAsync($"/channels/{channelId}/webhooks", properties)).Deserialize<DiscordDefaultWebhook>().SetClient(client);
+            var hook = (await client.HttpClient.PostAsync($"/channels/{channelId}/webhooks", properties)).Deserialize<DiscordDefaultWebhook>().SetClient(client);
             hook.Modify(properties);
             return hook;
         }
@@ -84,7 +84,7 @@ namespace Discord
 
         public static async Task<DiscordWebhook> GetWebhookAsync(this DiscordClient client, ulong webhookId, string token = null)
         {
-            string url = "/webhooks/" + webhookId;
+            var url = "/webhooks/" + webhookId;
 
             if (token != null)
                 url += "/" + token;

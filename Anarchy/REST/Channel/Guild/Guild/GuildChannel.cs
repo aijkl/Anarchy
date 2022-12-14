@@ -79,9 +79,9 @@ namespace Discord
         public async Task AddPermissionOverwriteAsync(ulong affectedId, PermissionOverwriteType type, DiscordPermission allow, DiscordPermission deny)
         {
             var overwrite = await Client.AddPermissionOverwriteAsync(Id, affectedId, type, allow, deny);
-            List<DiscordPermissionOverwrite> overwrites = PermissionOverwrites.ToList();
+            var overwrites = PermissionOverwrites.ToList();
 
-            int i = overwrites.FindIndex(o => o.AffectedId == o.AffectedId);
+            var i = overwrites.FindIndex(o => o.AffectedId == o.AffectedId);
 
             if (i == -1)
                 overwrites.Add(overwrite);
@@ -106,7 +106,7 @@ namespace Discord
 
             try
             {
-                List<DiscordPermissionOverwrite> overwrites = PermissionOverwrites.ToList();
+                var overwrites = PermissionOverwrites.ToList();
                 overwrites.RemoveAll(o => o.AffectedId == affectedId);
                 PermissionOverwrites = overwrites;
             }

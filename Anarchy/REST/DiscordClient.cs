@@ -23,7 +23,7 @@ namespace Discord
             }
             set
             {
-                string previousToken = Token;
+                var previousToken = Token;
 
                 _token = value;
                 

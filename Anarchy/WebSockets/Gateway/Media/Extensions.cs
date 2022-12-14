@@ -43,7 +43,7 @@ namespace Discord.Gateway
 
             client.GetChannel(channelId);
 
-            List<DiscordVoiceState> states = new List<DiscordVoiceState>();
+            var states = new List<DiscordVoiceState>();
             lock (client.VoiceStates.Lock)
             {
                 foreach (var state in client.VoiceStates.Values)

@@ -30,15 +30,15 @@ namespace Discord.Commands
             _handlerDict = new Dictionary<string, LocalCommandInfo>();
             ApplicationId = appId;
 
-            Assembly executable = Assembly.GetEntryAssembly();
+            var executable = Assembly.GetEntryAssembly();
             foreach (var type in executable.GetTypes())
             {
                 if (typeof(SlashCommand).IsAssignableFrom(type))
                 {
                     if (TryGetAttribute<SlashCommandAttribute>(type.GetCustomAttributes(), out var attr))
                     {
-                        List<ApplicationCommandOption> parameters = new List<ApplicationCommandOption>();
-                        Dictionary<string, PropertyInfo> properties = new Dictionary<string, PropertyInfo>();
+                        var parameters = new List<ApplicationCommandOption>();
+                        var properties = new Dictionary<string, PropertyInfo>();
 
                         foreach (var property in type.GetProperties())
                         {
@@ -78,7 +78,7 @@ namespace Discord.Commands
                             }
                         }
 
-                        string category = TryGetAttribute<SlashCommandCategoryAttribute>(type.GetCustomAttributes(), out var catAttr) ? catAttr.Category : null;
+                        var category = TryGetAttribute<SlashCommandCategoryAttribute>(type.GetCustomAttributes(), out var catAttr) ? catAttr.Category : null;
 
                         var handler = _handlerDict[category == null ? attr.Name : $"{category}.{attr.Name}"] = new LocalCommandInfo()
                         {

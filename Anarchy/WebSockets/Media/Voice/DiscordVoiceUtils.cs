@@ -42,12 +42,12 @@ namespace Discord.Media
 
         private static List<int> FindNALUnitIndexes(byte[] byteStream)
         {
-            List<int> indexes = new List<int>();
+            var indexes = new List<int>();
 
-            byte[] startCode = new byte[] { 0, 0, 0, 1 };
-            int currentStartCodeChar = 0;
+            var startCode = new byte[] { 0, 0, 0, 1 };
+            var currentStartCodeChar = 0;
 
-            for (int i = 0; i < byteStream.Length; i++)
+            for (var i = 0; i < byteStream.Length; i++)
             {
                 if (byteStream[i] == startCode[currentStartCodeChar])
                 {
@@ -68,11 +68,11 @@ namespace Discord.Media
         // used for DiscordLiveStream.Write(). WIP
         private static byte[][] NALBytestreamToPackets(byte[] byteStream)
         {
-            List<int> startIndexes = FindNALUnitIndexes(byteStream);
+            var startIndexes = FindNALUnitIndexes(byteStream);
 
-            byte[][] nalUnits = new byte[startIndexes.Count][];
+            var nalUnits = new byte[startIndexes.Count][];
 
-            for (int i = 0; i < startIndexes.Count; i++)
+            for (var i = 0; i < startIndexes.Count; i++)
             {
                 int count;
 
@@ -85,9 +85,9 @@ namespace Discord.Media
                 Buffer.BlockCopy(byteStream, startIndexes[i], nalUnits[i], 0, count);
             }
 
-            byte[] starts = new byte[nalUnits.Length];
+            var starts = new byte[nalUnits.Length];
 
-            for (int i = 0; i < starts.Length; i++)
+            for (var i = 0; i < starts.Length; i++)
                 starts[i] = nalUnits[i][0];
 
             return nalUnits;

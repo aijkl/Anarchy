@@ -17,7 +17,7 @@
 
         public override string ToString()
         {
-            string priceStr = ExpectedAmount.ToString();
+            var priceStr = ExpectedAmount.ToString();
 
             return $"{Name} {priceStr.Insert(priceStr.Length - 2, ".")}";
         }

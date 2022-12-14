@@ -109,7 +109,7 @@ namespace Discord
 
         private DiscordPermission ComputePermissions(DiscordGuild guild)
         {
-            DiscordPermission permissions = DiscordPermission.None;
+            var permissions = DiscordPermission.None;
 
             if (guild.OwnerId == User.Id)
                 permissions = PermissionUtils.GetAllPermissions();

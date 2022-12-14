@@ -80,7 +80,7 @@ namespace Discord
             if (settings.Username == null)
                 settings.Username = Username;
 
-            DiscordClientUser user = (await Client.HttpClient.PatchAsync("/users/@me", settings)).Deserialize<DiscordClientUser>();
+            var user = (await Client.HttpClient.PatchAsync("/users/@me", settings)).Deserialize<DiscordClientUser>();
 
             Update(user);
 

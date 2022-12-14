@@ -49,7 +49,7 @@ namespace Discord.Media
 
         private static byte[] CreateNonce(byte[] header)
         {
-            byte[] nonce = new byte[header.Length * 2];
+            var nonce = new byte[header.Length * 2];
             Buffer.BlockCopy(header, 0, nonce, 0, header.Length);
             return nonce;
         }
@@ -68,15 +68,15 @@ namespace Discord.Media
                 extensions[2] = (byte)(Extensions.Count >> 8);
                 extensions[3] = (byte)(Extensions.Count >> 0);
 
-                for (int i = 0; i < Extensions.Count; i++)
+                for (var i = 0; i < Extensions.Count; i++)
                     Buffer.BlockCopy(Extensions[i], 0, extensions, (i + 1) * ExtensionLength, ExtensionLength);
             }
             else
                 extensions = new byte[0];
 
-            byte[] packet = new byte[HeaderLength + extensions.Length + count + Sodium.LengthDifference];
+            var packet = new byte[HeaderLength + extensions.Length + count + Sodium.LengthDifference];
 
-            byte[] header = new byte[HeaderLength];
+            var header = new byte[HeaderLength];
             header[0] = Flags;
             header[1] = Type;
             header[2] = (byte)(Sequence >> 8);
@@ -102,10 +102,10 @@ namespace Discord.Media
 
         public static RTPPacketHeader Read(byte[] secretKey, byte[] packet, out byte[] payload)
         {
-            byte[] rawHeader = new byte[HeaderLength];
+            var rawHeader = new byte[HeaderLength];
             Buffer.BlockCopy(packet, 0, rawHeader, 0, rawHeader.Length);
 
-            RTPPacketHeader header = new RTPPacketHeader()
+            var header = new RTPPacketHeader()
             {
                 // Version = packet[0],
                 Type = packet[1],
@@ -114,7 +114,7 @@ namespace Discord.Media
                 SSRC = BitConverter.ToUInt32(new byte[] { rawHeader[11], rawHeader[10], rawHeader[9], rawHeader[8] }, 0)
             };
             
-            byte[] decrypted = new byte[packet.Length - HeaderLength - Sodium.LengthDifference];
+            var decrypted = new byte[packet.Length - HeaderLength - Sodium.LengthDifference];
 
             Sodium.Decrypt(packet, HeaderLength, packet.Length - HeaderLength, decrypted, 0, CreateNonce(rawHeader), secretKey);
 
@@ -123,12 +123,12 @@ namespace Discord.Media
                 header.ExtraExtensionData = new byte[ExtensionLength / 2];
                 Buffer.BlockCopy(decrypted, 0, header.ExtraExtensionData, 0, header.ExtraExtensionData.Length);
 
-                ushort extensionCount = BitConverter.ToUInt16(new byte[] { decrypted[3], decrypted[2] }, 0);
+                var extensionCount = BitConverter.ToUInt16(new byte[] { decrypted[3], decrypted[2] }, 0);
                 extensionCount++;
 
-                for (int i = 1; i < extensionCount; i++)
+                for (var i = 1; i < extensionCount; i++)
                 {
-                    byte[] extension = new byte[ExtensionLength];
+                    var extension = new byte[ExtensionLength];
                     Buffer.BlockCopy(decrypted, i * ExtensionLength, extension, 0, ExtensionLength);
 
                     header.Extensions.Add(extension);

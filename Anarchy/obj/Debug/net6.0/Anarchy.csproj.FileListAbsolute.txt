@@ -1,0 +1,12 @@
+C:\Users\aijkl\source\repos\Anarchy\Anarchy\bin\Debug\net6.0\Anarchy.deps.json
+C:\Users\aijkl\source\repos\Anarchy\Anarchy\bin\Debug\net6.0\Anarchy.dll
+C:\Users\aijkl\source\repos\Anarchy\Anarchy\bin\Debug\net6.0\Anarchy.pdb
+C:\Users\aijkl\source\repos\Anarchy\Anarchy\obj\Debug\net6.0\Anarchy.csproj.AssemblyReference.cache
+C:\Users\aijkl\source\repos\Anarchy\Anarchy\obj\Debug\net6.0\Anarchy.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aijkl\source\repos\Anarchy\Anarchy\obj\Debug\net6.0\Anarchy.AssemblyInfoInputs.cache
+C:\Users\aijkl\source\repos\Anarchy\Anarchy\obj\Debug\net6.0\Anarchy.AssemblyInfo.cs
+C:\Users\aijkl\source\repos\Anarchy\Anarchy\obj\Debug\net6.0\Anarchy.csproj.CoreCompileInputs.cache
+C:\Users\aijkl\source\repos\Anarchy\Anarchy\obj\Debug\net6.0\Anarchy.dll
+C:\Users\aijkl\source\repos\Anarchy\Anarchy\obj\Debug\net6.0\refint\Anarchy.dll
+C:\Users\aijkl\source\repos\Anarchy\Anarchy\obj\Debug\net6.0\Anarchy.pdb
+C:\Users\aijkl\source\repos\Anarchy\Anarchy\obj\Debug\net6.0\ref\Anarchy.dll

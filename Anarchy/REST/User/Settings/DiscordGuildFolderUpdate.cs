@@ -44,7 +44,7 @@ namespace Discord
             {
                 if (value.HasValue)
                 {
-                    Color val = value.Value;
+                    var val = value.Value;
 
                     _color = System.Drawing.Color.FromArgb(0, val.R, val.G, val.B).ToArgb();
                 }

@@ -56,10 +56,10 @@ namespace Discord
 
         public static async Task<DiscordMessage> SendFileAsync(this DiscordClient client, ulong channelId, string fileName, byte[] fileData, string message = null, bool tts = false)
         {
-            HttpClient httpClient = new HttpClient(new HttpClientHandler() { Proxy = client.Config.Proxy != null && client.Config.Proxy.Type == AnarchyProxyType.HTTP ? new WebProxy(client.Config.Proxy.Host + client.Config.Proxy.Port, false, new string[] { }, new NetworkCredential() { UserName = client.Config.Proxy.Username, Password = client.Config.Proxy.Password }) : null });
+            var httpClient = new HttpClient(new HttpClientHandler() { Proxy = client.Config.Proxy != null && client.Config.Proxy.Type == AnarchyProxyType.HTTP ? new WebProxy(client.Config.Proxy.Host + client.Config.Proxy.Port, false, new string[] { }, new NetworkCredential() { UserName = client.Config.Proxy.Username, Password = client.Config.Proxy.Password }) : null });
             httpClient.DefaultRequestHeaders.Add("Authorization", client.Token);
 
-            MultipartFormDataContent content = new MultipartFormDataContent
+            var content = new MultipartFormDataContent
             {
                 {
                     new StringContent(JsonConvert.SerializeObject(new MessageProperties()
@@ -191,11 +191,11 @@ namespace Discord
 
             const int messagesPerRequest = 100;
 
-            List<DiscordMessage> messages = new List<DiscordMessage>();
+            var messages = new List<DiscordMessage>();
 
             while (true)
             {
-                string parameters = "";
+                var parameters = "";
                 if (filters.Limit.HasValue) parameters += $"limit={(uint)Math.Min(messagesPerRequest, filters.Limit.Value - messages.Count)}&";
                 else parameters += $"limit={messagesPerRequest}&";
                 if (filters.BeforeId.HasValue) parameters += $"before={filters.BeforeId.Value}&";

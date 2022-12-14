@@ -9,6 +9,7 @@ namespace Discord.Gateway
         /// </summary>
         public static IReadOnlyList<PrivateChannel> GetPrivateChannels(this DiscordSocketClient client)
         {
+            var temp = ((DiscordClient)client).GetPrivateChannels();
             if (client.Config.Cache)
                 return client.PrivateChannels;
             else
