@@ -4,7 +4,7 @@
     {
         internal StreamKey(string key)
         {
-            string[] parts = key.Split(':');
+            var parts = key.Split(':');
 
             Location = parts[0];
             GuildId = ulong.Parse(parts[1]);

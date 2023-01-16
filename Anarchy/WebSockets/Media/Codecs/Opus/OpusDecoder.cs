@@ -22,7 +22,7 @@ namespace Discord.Media
 
         public unsafe int DecodeFrame(byte[] input, int inputOffset, int inputCount, byte[] output, int outputOffset, bool decodeFEC)
         {
-            int result = 0;
+            var result = 0;
             fixed (byte* inPtr = input)
             fixed (byte* outPtr = output)
                 result = Decode(_ptr, inPtr + inputOffset, inputCount, outPtr + outputOffset, FrameSamplesPerChannel, decodeFEC ? 1 : 0);

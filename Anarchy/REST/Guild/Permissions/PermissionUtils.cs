@@ -6,7 +6,7 @@ namespace Discord
     {
         public static DiscordPermission GetAllPermissions()
         {
-            DiscordPermission permissions = DiscordPermission.None;
+            var permissions = DiscordPermission.None;
             foreach (DiscordPermission permission in Enum.GetValues(typeof(DiscordPermission)))
                 permissions |= permission;
 

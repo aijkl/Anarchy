@@ -25,7 +25,7 @@ namespace Anarchy
         {
             get
             {
-                if (TryGetKey(value, out TKey key))
+                if (TryGetKey(value, out var key))
                     return key;
                 else
                     throw new ArgumentException("No item with the specified value was found");

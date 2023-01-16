@@ -74,11 +74,11 @@ namespace Discord.Media
         {
             if (message.Opcode == DiscordMediaOpcode.SSRCUpdate)
             {
-                SSRCUpdate ssrc = message.Data.ToObject<SSRCUpdate>();
+                var ssrc = message.Data.ToObject<SSRCUpdate>();
 
                 if (!Viewers.Contains(ssrc.UserId))
                 {
-                    List<ulong> viewers = Viewers.ToList();
+                    var viewers = Viewers.ToList();
                     viewers.Add(ssrc.UserId);
                     Viewers = viewers;
                     OnUserConnected?.Invoke(this, ssrc.UserId);
@@ -86,9 +86,9 @@ namespace Discord.Media
             }
             else if (message.Opcode == DiscordMediaOpcode.UserDisconnect)
             {
-                ulong userId = message.Data.ToObject<JObject>().Value<ulong>("user_id");
+                var userId = message.Data.ToObject<JObject>().Value<ulong>("user_id");
 
-                List<ulong> viewers = Viewers.ToList();
+                var viewers = Viewers.ToList();
                 if (viewers.Remove(userId))
                     Viewers = viewers;
 

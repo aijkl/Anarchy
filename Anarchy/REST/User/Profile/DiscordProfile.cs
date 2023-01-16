@@ -22,7 +22,7 @@ namespace Discord
         /// </summary>
         public void Update()
         {
-            DiscordProfile profile = Client.GetProfile(User.Id);
+            var profile = Client.GetProfile(User.Id);
             User = profile.User;
             MutualGuilds = profile.MutualGuilds;
             ConnectedAccounts = profile.ConnectedAccounts;

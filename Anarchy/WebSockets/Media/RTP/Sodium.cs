@@ -18,7 +18,7 @@ namespace Discord.Media
             fixed (byte* inPtr = input)
             fixed (byte* outPtr = output)
             {
-                int status = SecretBoxEasy(outPtr + outputOffset, inPtr + inputOffset, inputLength, nonce, secret);
+                var status = SecretBoxEasy(outPtr + outputOffset, inPtr + inputOffset, inputLength, nonce, secret);
                 if (status != 0)
                     throw new SodiumException();
                 return inputLength + LengthDifference;
@@ -30,7 +30,7 @@ namespace Discord.Media
             fixed (byte* inPtr = input)
             fixed (byte* outPtr = output)
             {
-                int status = SecretBoxOpenEasy(outPtr + outputOffset, inPtr + inputOffset, inputLength, nonce, secret);
+                var status = SecretBoxOpenEasy(outPtr + outputOffset, inPtr + inputOffset, inputLength, nonce, secret);
                 if (status != 0)
                     throw new SodiumException();
                 return inputLength - LengthDifference;

@@ -69,7 +69,7 @@ namespace Discord.Media
 
         private void Connection_OnDead(DiscordMediaConnection connection, WebSocketSharp.CloseEventArgs args)
         {
-            ulong prevChannel = _channelId.Value;
+            var prevChannel = _channelId.Value;
             _channelId = null;
             _client.TriggerVCDisconnect(_guildId, prevChannel, args);
         }
@@ -85,13 +85,13 @@ namespace Discord.Media
                         _ssrcToUserDictionary[state.SSRC] = state.UserId.Value;
                     break;
                 case DiscordMediaOpcode.SSRCUpdate:
-                    SSRCUpdate update = message.Data.ToObject<SSRCUpdate>();
+                    var update = message.Data.ToObject<SSRCUpdate>();
                     _ssrcToUserDictionary[update.Audio] = update.UserId;
                     break;
                 case DiscordMediaOpcode.UserDisconnect:
-                    ulong userId = message.Data.ToObject<JObject>().Value<ulong>("user_id");
+                    var userId = message.Data.ToObject<JObject>().Value<ulong>("user_id");
 
-                    if (_ssrcToUserDictionary.TryGetKey(userId, out uint ssrc))
+                    if (_ssrcToUserDictionary.TryGetKey(userId, out var ssrc))
                         _ssrcToUserDictionary.Remove(ssrc);
                     break;
             }
@@ -99,9 +99,9 @@ namespace Discord.Media
 
         private void Connection_OnUdpPacket(DiscordMediaConnection connection, MediaPacketEventArgs args)
         {
-            if (_decoder != null && args.Header.Type == DiscordMediaConnection.SupportedCodecs["opus"].PayloadType && _ssrcToUserDictionary.TryGetValue(args.Header.SSRC, out ulong userId))
+            if (_decoder != null && args.Header.Type == DiscordMediaConnection.SupportedCodecs["opus"].PayloadType && _ssrcToUserDictionary.TryGetValue(args.Header.SSRC, out var userId))
             {
-                if (!_receivers.TryGetValue(userId, out IncomingVoiceStream receiver))
+                if (!_receivers.TryGetValue(userId, out var receiver))
                 {
                     receiver = _receivers[userId] = new IncomingVoiceStream(Connection, userId);
                     _client.TriggerVCSpeaking(this, receiver);
@@ -121,8 +121,8 @@ namespace Discord.Media
                 {
                     try
                     {
-                        byte[] decoded = new byte[OpusConverter.FrameBytes];
-                        int length = _decoder.DecodeFrame(args.Payload, 0, args.Payload.Length, decoded, 0, false);
+                        var decoded = new byte[OpusConverter.FrameBytes];
+                        var length = _decoder.DecodeFrame(args.Payload, 0, args.Payload.Length, decoded, 0, false);
 
                         receiver.Enqueue(new DiscordVoicePacket(decoded));
                     }

@@ -13,6 +13,9 @@
 	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	  <PlatformTarget>AnyCPU</PlatformTarget>
 	  <NoWarn>IDE1006, CS0649, CS0414, IDE0051</NoWarn>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <PackageId>$(AssemblyName)-aijkl</PackageId>
+	  <Authors>Aijkl</Authors>
   </PropertyGroup>
 
   <ItemGroup>

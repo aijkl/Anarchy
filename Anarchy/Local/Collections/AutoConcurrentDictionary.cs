@@ -15,7 +15,7 @@ namespace Anarchy
         {
             get
             {
-                if (TryGetValue(key, out TValue value))
+                if (TryGetValue(key, out var value))
                     return value;
                 else
                     return this[key] = _valueCreate(key);
@@ -29,7 +29,7 @@ namespace Anarchy
             {
                 if (doNotSave)
                 {
-                    if (TryGetValue(key, out TValue value))
+                    if (TryGetValue(key, out var value))
                         return value;
                     else
                         return _valueCreate(key);

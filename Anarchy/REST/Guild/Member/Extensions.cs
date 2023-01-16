@@ -7,7 +7,7 @@ namespace Discord
     {
         public static async Task<GuildMember> GetGuildMemberAsync(this DiscordClient client, ulong guildId, ulong userId)
         {
-            GuildMember member = (await client.HttpClient.GetAsync($"/guilds/{guildId}/members/{userId}"))
+            var member = (await client.HttpClient.GetAsync($"/guilds/{guildId}/members/{userId}"))
                                             .Deserialize<GuildMember>().SetClient(client);
             member.GuildId = guildId;
             return member;
@@ -64,7 +64,7 @@ namespace Discord
 
         public static async Task<uint> GetGuildPrunableMembersAsync(this DiscordClient client, ulong guildId, MemberPruneProperties properties)
         {
-            string url = $"/guilds/{guildId}/prune?days={properties.Days}";
+            var url = $"/guilds/{guildId}/prune?days={properties.Days}";
 
             foreach (var role in properties.IncludedRoles)
                 url += "&include_roles=" + role;

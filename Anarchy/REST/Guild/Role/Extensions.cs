@@ -8,7 +8,7 @@ namespace Discord
         #region management
         public static async Task<DiscordRole> CreateRoleAsync(this DiscordClient client, ulong guildId, RoleProperties properties = null)
         {
-            DiscordRole role = (await client.HttpClient.PostAsync($"/guilds/{guildId}/roles"))
+            var role = (await client.HttpClient.PostAsync($"/guilds/{guildId}/roles"))
                                     .Deserialize<DiscordRole>().SetClient(client);
             role.GuildId = guildId;
             if (properties != null)
@@ -30,7 +30,7 @@ namespace Discord
 
         public static async Task<DiscordRole> ModifyRoleAsync(this DiscordClient client, ulong guildId, ulong roleId, RoleProperties properties)
         {
-            DiscordRole changed = (await client.HttpClient.PatchAsync($"/guilds/{guildId}/roles/{roleId}", properties)).Deserialize<DiscordRole>().SetClient(client);
+            var changed = (await client.HttpClient.PatchAsync($"/guilds/{guildId}/roles/{roleId}", properties)).Deserialize<DiscordRole>().SetClient(client);
             changed.GuildId = guildId;
             return changed;
         }
@@ -116,7 +116,7 @@ namespace Discord
 
         public static async Task<IReadOnlyList<DiscordRole>> GetGuildRolesAsync(this DiscordClient client, ulong guildId)
         {
-            IReadOnlyList<DiscordRole> roles = (await client.HttpClient.GetAsync($"/guilds/{guildId}/roles"))
+            var roles = (await client.HttpClient.GetAsync($"/guilds/{guildId}/roles"))
                                                     .Deserialize<IReadOnlyList<DiscordRole>>().SetClientsInList(client);
             foreach (var role in roles)
                 role.GuildId = guildId;

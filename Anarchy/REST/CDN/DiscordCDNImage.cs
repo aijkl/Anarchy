@@ -28,13 +28,13 @@ namespace Discord
             if (format != DiscordCDNImageFormat.Any && !AllowedFormats.Contains(format))
                 throw new NotSupportedException("Image format not supported. The supported formats for this endpoint are: " + string.Join(", ", AllowedFormats));
 
-            string url = Url;
+            var url = Url;
 
             if (format != DiscordCDNImageFormat.Any)
                 url += "." + format.ToString().ToLower();
 
             var httpResponse = _client.GetAsync(url).Result;
-            ImageType type = Enum.Parse<ImageType>(httpResponse.Content.Headers.First(x => x.Key == "Content-Type").Value.First().Replace("image/", string.Empty), true);
+            var type = Enum.Parse<ImageType>(httpResponse.Content.Headers.First(x => x.Key == "Content-Type").Value.First().Replace("image/", string.Empty), true);
             return new DiscordImage(httpResponse.Content.ReadAsByteArrayAsync().Result, type);
         }
     }

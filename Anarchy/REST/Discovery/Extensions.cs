@@ -10,7 +10,7 @@ namespace Discord
             if (options == null)
                 options = new GuildQueryOptions();
 
-            string query = $"?limit={options.Limit}&offset={options.Offset}";
+            var query = $"?limit={options.Limit}&offset={options.Offset}";
 
             if (options.Query != null)
                 query += "&query=" + options.Query;

@@ -19,7 +19,7 @@ namespace Discord.Gateway
                 ConnectedAccounts.SetClientsInList(Client);
                 Presences.SetClientsInList(Client);
 
-                List<MinimalGuild> guilds = new List<MinimalGuild>();
+                var guilds = new List<MinimalGuild>();
                 foreach (var obj in _guilds)
                     guilds.Add((Client.User.Type == DiscordUserType.User ? obj.ToObject<SocketGuild>() : obj.ToObject<MinimalGuild>()).SetClient(Client));
                 Guilds = guilds;

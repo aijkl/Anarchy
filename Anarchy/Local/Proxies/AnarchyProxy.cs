@@ -15,7 +15,7 @@ namespace Discord
 
         public static AnarchyProxy Parse(AnarchyProxyType type, string proxy)
         {
-            string[] split = proxy.Split(':');
+            var split = proxy.Split(':');
 
             var a = new AnarchyProxy()
             {

@@ -52,7 +52,7 @@ namespace Discord
                 return null;
             }
 
-            string type = Type switch
+            var type = Type switch
             {
                 ImageType.Jpeg => "jpeg",
                 ImageType.Png => "png",

@@ -73,11 +73,11 @@ namespace Discord.Gateway
 
             if (client.Config.Cache)
             {
-                DiscordChannel channel = client.GetChannel(channelId);
+                var channel = client.GetChannel(channelId);
 
                 if (channel.InGuild)
                 {
-                    GuildChannel guildChannel = (GuildChannel)channel;
+                    var guildChannel = (GuildChannel)channel;
 
                     foreach (var message in messages)
                         message.GuildId = guildChannel.GuildId;

@@ -8,7 +8,7 @@ namespace Discord
         #region management
         public static async Task<DiscordEmoji> CreateEmojiAsync(this DiscordClient client, ulong guildId, EmojiProperties properties)
         {
-            DiscordEmoji emoji = (await client.HttpClient.PostAsync($"/guilds/{guildId}/emojis", properties)).Deserialize<DiscordEmoji>().SetClient(client);
+            var emoji = (await client.HttpClient.PostAsync($"/guilds/{guildId}/emojis", properties)).Deserialize<DiscordEmoji>().SetClient(client);
             emoji.GuildId = guildId;
             return emoji;
         }
@@ -81,7 +81,7 @@ namespace Discord
 
         public static async Task<DiscordEmoji> GetGuildEmojiAsync(this DiscordClient client, ulong guildId, ulong emojiId)
         {
-            DiscordEmoji reaction = (await client.HttpClient.GetAsync($"/guilds/{guildId}/emojis/{emojiId}"))
+            var reaction = (await client.HttpClient.GetAsync($"/guilds/{guildId}/emojis/{emojiId}"))
                                         .Deserialize<DiscordEmoji>().SetClient(client);
             reaction.GuildId = guildId;
             return reaction;

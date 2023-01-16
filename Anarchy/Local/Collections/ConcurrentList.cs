@@ -58,7 +58,7 @@ namespace Anarchy
         {
             lock (Lock)
             {
-                for (int i = 0; i < base.Count; i++)
+                for (var i = 0; i < base.Count; i++)
                 {
                     if (match.Invoke(base[i]))
                     {
@@ -76,7 +76,7 @@ namespace Anarchy
         {
             lock (Lock)
             {
-                for (int i = 0; i < base.Count; i++)
+                for (var i = 0; i < base.Count; i++)
                 {
                     if (match.Invoke(base[i]))
                     {

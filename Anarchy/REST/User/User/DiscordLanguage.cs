@@ -6,7 +6,7 @@ namespace Discord
 {
     public class LanguageConverter : JsonConverter
     {
-        private static readonly Dictionary<DiscordLanguage, string> Languages = new Dictionary<DiscordLanguage, string>()
+        public static readonly IReadOnlyDictionary<DiscordLanguage, string> Languages = new Dictionary<DiscordLanguage, string>()
         {
             { DiscordLanguage.Danish, "da" },
             { DiscordLanguage.German, "de" },
@@ -45,7 +45,7 @@ namespace Discord
             return Languages[lang];
         }
 
-        private DiscordLanguage FromString(string langStr)
+        public static DiscordLanguage FromString(string langStr)
         {
             foreach (var language in Languages)
             {

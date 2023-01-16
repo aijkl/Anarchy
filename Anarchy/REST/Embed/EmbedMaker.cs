@@ -63,7 +63,7 @@ namespace Discord
                 throw new EmbedException(EmbedError.FieldContentTooLong);
 
 
-            List<EmbedField> fields = _embed.Fields.ToList();
+            var fields = _embed.Fields.ToList();
             fields.Add(new EmbedField(name, content, inline));
             _embed.Fields = fields;
 

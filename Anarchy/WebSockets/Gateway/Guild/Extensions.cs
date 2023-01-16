@@ -73,8 +73,8 @@ namespace Discord.Gateway
 
         public static Task<IReadOnlyList<GuildMember>> GetGuildMembersAsync(this DiscordSocketClient client, ulong guildId, uint limit = 0)
         {
-            List<GuildMember> members = new List<GuildMember>();
-            TaskCompletionSource<IReadOnlyList<GuildMember>> task = new TaskCompletionSource<IReadOnlyList<GuildMember>>();
+            var members = new List<GuildMember>();
+            var task = new TaskCompletionSource<IReadOnlyList<GuildMember>>();
 
             void handler(DiscordSocketClient c, GuildMembersEventArgs args)
             {
@@ -113,13 +113,13 @@ namespace Discord.Gateway
 
         private static int[][] CreateChunks(int from, bool more)
         {
-            int[][] results = new int[more ? 3 : 1][];
+            var results = new int[more ? 3 : 1][];
 
             results[0] = new int[] { 0, 99 };
 
             if (more)
             {
-                for (int i = 1; i <= 2; i++)
+                for (var i = 1; i <= 2; i++)
                 {
                     results[i] = new int[] { from, from + 99 };
                     from += 100;
@@ -136,7 +136,7 @@ namespace Discord.Gateway
         public static Task<IReadOnlyList<GuildMember>> GetGuildChannelMembersAsync(this DiscordSocketClient client, ulong guildId, ulong channelId, uint limit = 0)
         {
             var completionSource = new TaskCompletionSource<IReadOnlyList<GuildMember>>();
-            List<GuildMember> members = new List<GuildMember>();
+            var members = new List<GuildMember>();
 
             // maybe could've made it start from the last chunk it received,
             // but due to them possibly being logged out for an extended period of time, starting over is better
@@ -156,7 +156,7 @@ namespace Discord.Gateway
             {
                 if (e.Guild.Id == guildId)
                 {
-                    int membersAccordingToRoles = 0;
+                    var membersAccordingToRoles = 0;
 
                     foreach (var group in e.Groups)
                         membersAccordingToRoles += group.Count;
@@ -165,7 +165,7 @@ namespace Discord.Gateway
                     { 
                         var syncOps = e.Operations.Where(o => o.Type == "SYNC").ToList();
 
-                        for (int i = syncOps.Count - 1; i >= 0; i--)
+                        for (var i = syncOps.Count - 1; i >= 0; i--)
                         {
                             var operation = syncOps[i];
 

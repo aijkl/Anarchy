@@ -83,16 +83,16 @@ namespace Discord.Media
                     _nextTick = Environment.TickCount;
                 else
                 {
-                    long distance = _nextTick - Environment.TickCount;
+                    var distance = _nextTick - Environment.TickCount;
 
                     if (distance > 0)
                         Thread.Sleep((int)distance);
                 }
 
-                byte[] opusFrame = new byte[OpusConverter.FrameBytes];
-                int frameSize = _encoder.EncodeFrame(buffer, offset, opusFrame, 0);
+                var opusFrame = new byte[OpusConverter.FrameBytes];
+                var frameSize = _encoder.EncodeFrame(buffer, offset, opusFrame, 0);
 
-                byte[] packet = new RTPPacketHeader()
+                var packet = new RTPPacketHeader()
                 {
                     Type = DiscordMediaConnection.SupportedCodecs["opus"].PayloadType,
                     Sequence = _sequence,
@@ -142,19 +142,19 @@ namespace Discord.Media
 
             _nextTick = -1;
 
-            byte[] buffer = new byte[OpusEncoder.FrameBytes];
+            var buffer = new byte[OpusEncoder.FrameBytes];
             while (!cancellationToken.IsCancellationRequested && _client.Connection.State == MediaConnectionState.Ready)
             {
-                int read = stream.Read(buffer, 0, buffer.Length);
+                var read = stream.Read(buffer, 0, buffer.Length);
                 if (read == 0) return true;
 
-                byte[] actual = new byte[read];
+                var actual = new byte[read];
                 Buffer.BlockCopy(buffer, 0, actual, 0, read);
                 _toBeUsed.AddRange(actual);
 
                 if (_toBeUsed.Count >= OpusConverter.FrameBytes)
                 {
-                    byte[] slice = _toBeUsed.Take(OpusConverter.FrameBytes).ToArray();
+                    var slice = _toBeUsed.Take(OpusConverter.FrameBytes).ToArray();
                     _toBeUsed = _toBeUsed.Skip(OpusConverter.FrameBytes).ToList();
 
                     Write(slice, 0);

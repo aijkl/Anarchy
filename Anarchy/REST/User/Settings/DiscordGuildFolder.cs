@@ -15,7 +15,7 @@ namespace Discord
         {
             get
             {
-                List<MinimalGuild> guilds = new List<MinimalGuild>();
+                var guilds = new List<MinimalGuild>();
                 foreach (var guildId in _guilds)
                     guilds.Add(new MinimalGuild(guildId).SetClient(Client));
 

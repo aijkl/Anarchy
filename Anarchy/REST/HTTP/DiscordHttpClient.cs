@@ -33,7 +33,7 @@ namespace Discord
             if (!endpoint.StartsWith("https")) 
                 endpoint = DiscordHttpUtil.BuildBaseUrl(_discordClient.Config.ApiVersion, _discordClient.Config.SuperProperties.ReleaseChannel) + endpoint;
 
-            string json = "{}";
+            var json = "{}";
             if (payload != null)
             {
                 if (payload.GetType() == typeof(string))
@@ -42,8 +42,8 @@ namespace Discord
                     json = JsonConvert.SerializeObject(payload);
             }
 
-            uint retriesLeft = _discordClient.Config.RestConnectionRetries;
-            bool hasData = method == Leaf.xNet.HttpMethod.POST || method == Leaf.xNet.HttpMethod.PATCH || method == Leaf.xNet.HttpMethod.PUT || method == Leaf.xNet.HttpMethod.DELETE;
+            var retriesLeft = _discordClient.Config.RestConnectionRetries;
+            var hasData = method == Leaf.xNet.HttpMethod.POST || method == Leaf.xNet.HttpMethod.PATCH || method == Leaf.xNet.HttpMethod.PUT || method == Leaf.xNet.HttpMethod.DELETE;
 
             while (true)
             {
@@ -53,7 +53,7 @@ namespace Discord
 
                     if (_discordClient.Proxy == null || _discordClient.Proxy.Type == ProxyType.HTTP)
                     {
-                        HttpClient client = new HttpClient(new HttpClientHandler() { Proxy = _discordClient.Proxy == null ? null : new WebProxy(_discordClient.Proxy.Host, _discordClient.Proxy.Port) });
+                        var client = new HttpClient(new HttpClientHandler() { Proxy = _discordClient.Proxy == null ? null : new WebProxy(_discordClient.Proxy.Host, _discordClient.Proxy.Port) });
                         if (_discordClient.Token != null)
                             client.DefaultRequestHeaders.Add("Authorization", _discordClient.Token);
 
@@ -76,7 +76,7 @@ namespace Discord
                     }
                     else
                     {
-                        HttpRequest msg = new HttpRequest
+                        var msg = new HttpRequest
                         {
                             IgnoreProtocolErrors = true,
                             UserAgent = _discordClient.User != null && _discordClient.User.Type == DiscordUserType.Bot ? "Anarchy/0.8.1.2" : _discordClient.Config.SuperProperties.UserAgent,

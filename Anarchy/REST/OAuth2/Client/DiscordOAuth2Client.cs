@@ -37,7 +37,7 @@ namespace Discord
 
         private void authorize(string grantType, Dictionary<string, string> useSpecific)
         {
-            Dictionary<string, string> values = new Dictionary<string, string>()
+            var values = new Dictionary<string, string>()
             {
                 { "client_id", _clientId.ToString() },
                 { "client_secret", _clientSecret },

@@ -50,11 +50,11 @@ namespace Discord.Media
 
         public Task<DiscordVoicePacket> ReadAsync()
         {
-            if (_packets.TryDequeue(out DiscordVoicePacket packet))
+            if (_packets.TryDequeue(out var packet))
                 return Task.FromResult(packet);
             else if (Session.State == MediaConnectionState.Ready && !Closed)
             {
-                TaskCompletionSource<DiscordVoicePacket> task = new TaskCompletionSource<DiscordVoicePacket>();
+                var task = new TaskCompletionSource<DiscordVoicePacket>();
 
                 async void handler(object sender, EventArgs e)
                 {

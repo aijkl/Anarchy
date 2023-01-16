@@ -104,7 +104,7 @@ namespace Discord
                     {
                         var jsonAttr = (JsonPropertyAttribute)attr;
 
-                        if (jObj.TryGetValue(jsonAttr.PropertyName, out JToken value))
+                        if (jObj.TryGetValue(jsonAttr.PropertyName, out var value))
                             property.SetValue(this, value.ToObject(property.PropertyType));
 
                         break;
@@ -112,7 +112,7 @@ namespace Discord
                 }
             }
 
-            if (jObj.TryGetValue("theme", out JToken theme))
+            if (jObj.TryGetValue("theme", out var theme))
                 _theme = theme.ToObject<string>();
         }
     }
